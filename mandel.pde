@@ -1,60 +1,38 @@
-
 void setup(){
-size(1200, 1000);
+  size(800, 800);
+  background(0);
+ ro=5;
+ frameRate(60);
 }
-float zoom = 1;
-float a = 0.005;
-float b = 2;
-int x = 900;
-int y = 500;
-int func(double x, double y, double newx, double newy){
-  int escape = 1;
-  double abs = Math.pow(x, 2) + Math.pow(y, 2);
-  while(abs<4 && escape<256){
-    double temp = newx;
-    newx = x+(Math.pow(newx, 2)-Math.pow(newy, 2));
-    newy = y+(2*temp*newy);
-    abs = Math.pow(newx, 2) + Math.pow(newy, 2);
-    escape++;
-  }
-  return escape;
-}
+float x;
+float y;
+float ro;
+float speed;
 void draw(){
-scale(zoom);
-translate(x, y);
-for(float i = -2; i<=2; i+=0.002){
-  for(float j = -2; j<=2; j+=0.002){
-    noStroke();
-    if(func(i, j, i, j) <256){
-     fill(func(i, j, i, j), 
-     func(i, j, i, j)*Math.abs(j*i*30), 256-func(i, j, i, j));
-    }
-    else{
-      fill(0);
-    }
-    rect(i*450, j*450, b, b);
-  }
-}
-if(mousePressed){
-  zoom+=1;
-  //a/=1.5;
-  //b/=1.5;
-}
-if(keyPressed){
-  if(key == CODED){
-    if(keyCode == LEFT){
-      x+=10;
-    }
-    else if(keyCode == RIGHT){
-      x-=10;
-    }
-    else if(keyCode == DOWN){
-      y-=10;
-    }
-    else if(keyCode == UP){
-      y+=10;
-    }
-  }
-}
-
+  background(0);
+  x=0;
+  y=0;
+   translate(400, 400);
+   noStroke();
+   for(float r = speed; r<255; r+=4){
+     for(float b = speed; b<255; b+=4){
+       for(float g = speed; g<255; g+=4){
+         if(y<=598){
+         rotate(PI/360);
+         fill(r, g, b);
+         rect(x, y, 2, 2);
+         y+=0.5;
+         }
+          else{
+            rotate(PI/180);
+         fill(r, g, b);
+         rect(x, y, 2, 2);
+   y=0;
+   x+=0.5;
+        }
+       }
+     }
+   }
+   //ro+=0.1;
+speed+=0.5;
 }
